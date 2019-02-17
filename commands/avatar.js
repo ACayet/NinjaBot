@@ -1,4 +1,11 @@
 /**
+ * Require modules
+ * @requires
+ */
+const Discord = require('discord.js');
+require('dotenv').config()
+
+/**
  * Show profile image
  * @function
  * @param {String} message
@@ -6,19 +13,11 @@
 const avatar = message => {
     message.mentions.users.map(user => {
         // Build embed
-        const embed = {
-            color: 0xEF6650,
-            author: {
-                name: `Image de profil de ${user.username}`,
-                
-                url: user.displayAvatarURL,
-            },
-            image: {
-                url: user.displayAvatarURL,
-            }
-        };
-        // Send embed
-        message.channel.send({ embed: embed });
+        const embed = new Discord.RichEmbed()
+            .setColor(process.env.BOTCOLOR)
+            .setAuthor(`Image de profil de ${user.username}`,'',user.displayAvatarURL)
+            .setImage(user.displayAvatarURL)
+        message.channel.send(embed);
     });
 }
 

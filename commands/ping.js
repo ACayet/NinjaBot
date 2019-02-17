@@ -5,7 +5,7 @@
 
 
 /**
- * Show profile image
+ * Show response time in ms
  * @function
  * @param {String} message
  */

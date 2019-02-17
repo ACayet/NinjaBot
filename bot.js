@@ -12,7 +12,7 @@ const errorMessages = require('./config.json')
  * Setup collections
  */
 const bot = new Discord.Client();
-const filesDir = ['commands'];
+const filesDir = ['commands', 'every'];
 
 filesDir.forEach(function (dir) {
   const filesNames = fs.readdirSync(`./${dir}`).filter(file => file.endsWith('.js'));
@@ -43,7 +43,7 @@ bot.on('ready', function () {
     bot.user.setPresence({
         status: 'online',
         game: {
-          name: 'ouloulou',
+          name: process.env.PREFIX + 'help',
           type: 'PLAYING'
         }
     }).catch(console.error);
@@ -59,9 +59,9 @@ bot.on('message', message => {
     if (message.author.bot) return;
 
     // Every messages modules
-    //for (let [k, v] of bot.every) {
-    //    v.execute(message);
-    //}
+    for (let [k, v] of bot.every) {
+        v.execute(message);
+    }
 
     // Exit if no prefix
     if (!message.content.startsWith(process.env.PREFIX)) return;
@@ -82,7 +82,7 @@ bot.on('message', message => {
 
     // Execute the corresponding module
     try {
-        if (command.name === "help") command.execute(message, args, client.commands);
+        if (command.name === "help") command.execute(message, args, bot.commands);
         else command.execute(message, args);
     } catch (error) {
         console.error(error);
