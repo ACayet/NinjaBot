@@ -64,4 +64,4 @@ typings/
 .vscode/*
 
 # Sources files (assets, saves etc...)
-sources
+sources/
