@@ -1,0 +1,7 @@
+{
+    
+    "wrongCommand" : "La commande n'existe pas ou n'est pas correctement orthographié",
+    "missingArguments" : "Il manque un ou plusieurs arguments après la commande",
+    "missingMentions" : "Vous avez oublier de mentionner quelqu'un après la commande"
+
+}
