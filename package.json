@@ -2,6 +2,10 @@
   "name": "psybot",
   "version": "1.0.0",
   "description": "A wonderful discord bot with many functionalities (risitas...)",
+  "engines": {
+    "npm": "6.4.1",
+    "node": "10.15.1"
+  },
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js"
