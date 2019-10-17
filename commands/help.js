@@ -18,7 +18,7 @@ const help = (message, args, commands) => {
                 .setColor(process.env.BOTCOLOR)
                 .setAuthor(`Regarde tout ce que je sais faire, je suis super intelligent ^_^`)
                 
-                console.log(commands);
+                //console.log(commands);
             allHelp.fields = commands.map(cmd => { return {
               
                 name: `!${cmd.name}`, 

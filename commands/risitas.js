@@ -4,6 +4,7 @@
  */
 const Discord = require('discord.js');
 require('dotenv').config()
+var logger = require('winston');
 const rp = require('request-promise');
 
 /**
@@ -41,7 +42,8 @@ const risitas = (message, args) => {
             }
         })
         .catch(function (err) {
-            console.log(err);
+            logger.error(err)
+            //console.log(err);
             message.channel.send("Probleme avec l'api, veuillez ressayer");
         });
   
