@@ -26,11 +26,12 @@ const risitas = (message, args) => {
     };
     rp(options)
         .then(function (body) {
-            //console.log(body);
             if(body.stickers.length > 0) {
                 let randomPic = Math.floor(Math.random() * Math.floor(body.stickers.length));
-
+                
                 if(body.stickers[randomPic].risibank_link) {
+                    logger.info(body.stickers[randomPic].risibank_link)
+                    //TODO : check if url exist and isnt 404 not found
                     message.channel.send("Un risitas aleatoire pour "+ args[0], {
                         file: body.stickers[randomPic].risibank_link
                     });
@@ -39,14 +40,14 @@ const risitas = (message, args) => {
                 }
             } else {
                 message.channel.send("Aucune photo trouvé pour ta recherche");
+                
             }
         })
         .catch(function (err) {
-            logger.error(err)
+            logger.error(err);
             //console.log(err);
             message.channel.send("Probleme avec l'api, veuillez ressayer");
         });
-  
 
 }
 
