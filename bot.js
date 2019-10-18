@@ -47,7 +47,6 @@ bot.on('ready', function () {
           type: 'PLAYING'
         }
     }).catch(console.error);
-    logger.info(errorMessages.missingArguments);
 })
 
 /**
