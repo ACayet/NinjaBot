@@ -3,7 +3,8 @@
  * @requires
  */
 const Discord = require('discord.js');
-const urlStatusCode = require('url-status-code')
+const urlStatusCode = require('url-status-code');
+const httpStatusCode = require('http-status-codes');
 require('dotenv').config()
 var logger = require('winston');
 const rp = require('request-promise');
@@ -51,8 +52,7 @@ const risitas = (message, args) => {
                     } catch (err) {
                         logger.error(err);
                     }
-                   
-                }while (code === 404)
+                }while (code === httpStatusCode.NOT_FOUND)
 
                 if(body.stickers[randomPic].risibank_link) {
                     
