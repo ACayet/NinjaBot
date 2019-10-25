@@ -27,12 +27,19 @@ const disconnect = (message, args) => {
         return;
     }
 
+    
+
     let sideCoin;
     switch (args.length) {
         case 1:
             message.mentions.users.map(user => {
                 let disconnectedUser = message.guild.member(user);
                 if(!disconnectedUser) return;
+
+                if(disconnectedUser.voiceChannel == null){
+                    message.channel.send(`${user.username} n\'est pas connecté au vocal`);
+                    return;
+                }
 
                 sideCoin = "pile"
                 let random = Math.floor(Math.random() * (1 - 0 + 1) + 0);
@@ -56,6 +63,11 @@ const disconnect = (message, args) => {
             message.mentions.users.map(user => {
                 let disconnectedUser = message.guild.member(user);
                 if(!disconnectedUser) return;
+
+                if(disconnectedUser.voiceChannel == null){
+                    message.channel.send(`${user.username} n\'est pas connecté au vocal`);
+                    return;
+                }
 
                 sideCoin = args[0].toLowerCase();
                 let random = Math.floor(Math.random() * (1 - 0 + 1) + 0);
