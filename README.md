@@ -7,6 +7,8 @@
 * [Winston](https://www.npmjs.com/package/winston) - Un logger sympa
 * [dotenv](https://www.npmjs.com/package/dotenv) - Permet de charger les fichier .env et d'utiliser les variable d'environnement
 * [request-promise](https://www.npmjs.com/package/request-promise) - Requetes http asynchrone pour les differentes apis
+* [url-status-code](https://www.npmjs.com/package/url-status-code) - Renvoie le status http d'une url
+* [http-status-codes](https://www.npmjs.com/package/http-status-codes) - Liste de constantes representants les status http
 
 ## Variables d'environement
 
@@ -21,4 +23,16 @@
 * ping - Affiche le delais de latence entre le bot et le serveur
 * avatar - Affiche l'avatar d'un utilisateur
 * kick - Kick un utilisateur apres un pile ou face
+* disconnect - Deconnecte un utilisateur apres un pile ou face
 * risitas - Affiche un risitas aleatoire depuis la risibank
+
+## Droits necessaires par commande
+
+Droits generaux : View Channels, Send Messages
+
+* help - Aucun droits speciaux
+* ping - Aucun droits speciaux
+* avatar - Aucun droits speciaux
+* kick - Kick Members
+* disconnect - Move Members
+* risitas - Aucun droits speciaux
