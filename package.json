@@ -1,5 +1,5 @@
 {
-  "name": "psybot",
+  "name": "ninjabot",
   "version": "1.0.0",
   "description": "A wonderful discord bot with many functionalities (risitas...)",
   "engines": {
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ACayet/PsyBot.git"
+    "url": "git+https://github.com/ACayet/NinjaBot.git"
   },
   "author": "Arthur Cayet <arthurcayet@hotmail.fr>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ACayet/PsyBot/issues"
+    "url": "https://github.com/ACayet/NinjaBot/issues"
   },
-  "homepage": "https://github.com/ACayet/PsyBot#readme",
+  "homepage": "https://github.com/ACayet/NinjaBot#readme",
   "dependencies": {
     "discord.js": "^11.6.3",
     "dotenv": "^6.2.0",

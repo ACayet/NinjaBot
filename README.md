@@ -1,4 +1,4 @@
-# PsyBot
+# NinjaBot
 
 ## Prérequis
 
