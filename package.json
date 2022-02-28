@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ACayet/NinjaBot.git"
+    "url": "git@github.com:ACayet/NinjaBot.git"
   },
   "author": "Arthur Cayet <me@arthurcayet.fr>",
   "license": "ISC",
