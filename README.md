@@ -12,7 +12,6 @@
 
 ## Variables d'environement
 
-* PREFIX - Prefixe des commandes dans tout le bot
 * DISCORD_TOKEN - Token secret du bot discord
 * BOTCOLOR - Couleur utilisé dans les messages rich presence, etc ...
 * RISIBANKAPI - Url de l'api risibank

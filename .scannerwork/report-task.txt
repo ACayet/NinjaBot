@@ -1,0 +1,6 @@
+projectKey=discordbots:ninjabot
+serverUrl=https://sonarqube.arthurcayet.fr
+serverVersion=8.3.1.34397
+dashboardUrl=https://sonarqube.arthurcayet.fr/dashboard?id=discordbots%3Aninjabot
+ceTaskId=AXKPyZJfEgcUIGpF3kfg
+ceTaskUrl=https://sonarqube.arthurcayet.fr/api/ce/task?id=AXKPyZJfEgcUIGpF3kfg

@@ -1,35 +1,40 @@
 {
   "name": "ninjabot",
-  "version": "1.0.0",
-  "description": "A wonderful discord bot with many functionalities (risitas...)",
+  "version": "2.0.0",
+  "description": "A wonderful discord bot with many functionalities (risitas, toss a coin, avatar...)",
   "engines": {
-    "npm": "6.4.1",
-    "node": "10.15.1"
+    "npm": "8.5.2",
+    "node": "16.14.0"
   },
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js",
+    "dev": "nodemon bot.js",
     "test": "mocha"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ACayet/NinjaBot.git"
   },
-  "author": "Arthur Cayet <arthurcayet@hotmail.fr>",
+  "author": "Arthur Cayet <me@arthurcayet.fr>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ACayet/NinjaBot/issues"
   },
   "homepage": "https://github.com/ACayet/NinjaBot#readme",
   "dependencies": {
-    "@discordjs/opus": "^0.3.2",
-    "discord.js": "^11.6.3",
-    "dotenv": "^6.2.0",
-    "http-status-codes": "^1.4.0",
-    "mocha": "^7.1.1",
-    "request": "^2.88.2",
-    "request-promise": "^4.2.5",
-    "url-status-code": "^1.1.1",
-    "winston": "^3.2.1"
+    "@discordjs/builders": "^0.12.0",
+    "@discordjs/rest": "^0.3.0",
+    "discord-api-types": "^0.27.3",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "http-status-codes": "^2.2.0",
+    "node-fetch": "^2.6.7",
+    "url-status-code": "^2.0.0",
+    "winston": "^3.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "mocha": "^9.2.1"
   }
 }

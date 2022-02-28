@@ -2,32 +2,32 @@
  * Require modules
  * @requires
  */
-const Discord = require('discord.js');
-require('dotenv').config()
+require('dotenv').config();
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
 
 /**
  * Show profile image
  * @function
- * @param {String} message
+ * @param {String} interaction
  */
-const avatar = message => {
-    message.mentions.users.map(user => {
-        // Build embed
-        const embed = new Discord.RichEmbed()
-            .setColor(process.env.BOTCOLOR)
-            .setAuthor(`Image de profil de ${user.username}`,'',user.displayAvatarURL)
-            .setImage(user.displayAvatarURL)
-        message.channel.send(embed);
-    });
-}
+const avatar = interaction => {
+	const user = interaction.options.getUser('user');
+	// Build embed
+	const embed = new MessageEmbed()
+		.setColor(process.env.BOTCOLOR)
+		.setAuthor({ name: `Image de profil de ${user.username}`, iconURL: '', url: user.displayAvatarURL() })
+		.setImage(user.displayAvatarURL() + '?size=2048');
+	interaction.reply({ embeds: [embed] });
+};
 
 module.exports = {
-    name: "avatar",
-    help: {
-        desc: "Je vais chercher les images de profil des gens que tu mentionnes.",
-        format: "[@mention]"
-    },
-    args: true,
-    mentions: true,
-    execute: avatar
+	data: new SlashCommandBuilder()
+		.setName('avatar')
+		.setDescription('Je vais chercher les images de profil des gens que tu mentionnes.')
+		.addUserOption(option =>
+			option.setName('user')
+				.setDescription('L\'utilisateur avec l\'avatar a afficher')
+				.setRequired(true)),
+	execute: avatar,
 };

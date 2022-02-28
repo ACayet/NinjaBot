@@ -2,6 +2,7 @@
  * Require modules
  * @requires
  */
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 
 /**
@@ -9,18 +10,11 @@
  * @function
  * @param {String} message
  */
-const ping = message => {
-    
-    message.channel.send(new Date().getTime() - message.createdTimestamp + " ms");
-}
+const ping = async (interaction) => {
+	interaction.reply(`${interaction.client.ws.ping} ms`);
+};
 
 module.exports = {
-    name: "ping",
-    help: {
-        desc: "J'affiche mon temps de reponse",
-        format: ""
-    },
-    args: false,
-    mentions: false,
-    execute: ping
+	data: new SlashCommandBuilder().setName('ping').setDescription('Je reponds avec mon temps de reponse'),
+	execute: ping,
 };

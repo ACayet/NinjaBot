@@ -4,90 +4,47 @@
  */
 const fs = require('fs');
 const Discord = require('discord.js');
-var logger = require('winston');
-require('dotenv').config()
-const errorMessages = require('./config.json')
-
-/**
- * Setup collections
- */
-const bot = new Discord.Client();
-const filesDir = ['commands', 'every'];
-
-filesDir.forEach(function (dir) {
-  const filesNames = fs.readdirSync(`./${dir}`).filter(file => file.endsWith('.js'));
-  bot[dir] = new Discord.Collection();
-  for (const fileName of filesNames) {
-    const file = require(`./${dir}/${fileName}`);
-    bot[dir].set(fileName.split('.js')[0], file);
-  }
-});
+const logger = require('winston');
+require('dotenv').config();
 
 /**
  * Setup logger levels
  */
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
-    colorize: true
+	colorize: true,
 });
 logger.level = 'debug';
 
-/**
- * Ready events
- * @event
- */
-bot.on('ready', function () {
-    logger.info('Connected');
-    logger.info('Logged in as: ');
-    logger.info(bot.user.username + ' - (' + bot.user.id + ')');
-    bot.user.setPresence({
-        status: 'online',
-        game: {
-          name: process.env.PREFIX + 'help',
-          type: 'PLAYING'
-        }
-    }).catch(console.error);
-})
+// Creating Bot instance
+const bot = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_VOICE_STATES] });
 
 /**
- * Message event
- * @event
+ * Setup collections (command list, event listeners, daemon etc...)
  */
-bot.on('message', message => {
-    // Exit if bot message
-    if (message.author.bot) return;
+// Directories to crawl
+const filesDir = ['commands', 'events', 'every'];
 
-    // Every messages modules
-    for (let [k, v] of bot.every) {
-        v.execute(message);
-    }
-
-    // Exit if no prefix
-    if (!message.content.startsWith(process.env.PREFIX)) return;
-
-    // Get args and commandName
-    const args = message.content.slice(process.env.PREFIX.length).split(/ +/);
-    const commandName = args.shift().toLowerCase();
-
-    // Get the corresponding command
-    let command = bot.commands.get(commandName);
-
-    // Wrong command name ?
-    if (!command) return message.channel.send(errorMessages.wrongCommand);
-    // Missing arguments ?
-    if (command.args && !args.length) return message.channel.send(errorMessages.missingArguments);
-    // Missing mentions ?
-    if (command.mentions && !message.mentions.users.size) return message.channel.send(errorMessages.missingMentions);
-
-    // Execute the corresponding module
-    try {
-        if (command.name === "help") command.execute(message, args, bot.commands);
-        else command.execute(message, args);
-    } catch (error) {
-        console.error(error);
-        message.channel.send(errorMessages.catchedError);
-    }
-
+filesDir.forEach(function(dir) {
+	const filesNames = fs.readdirSync(`./${dir}`).filter(file => file.endsWith('.js'));
+	if (dir == 'events') {
+		for (const file of filesNames) {
+			const event = require(`./events/${file}`);
+			if (event.once) {
+				bot.once(event.name, (...args) => event.execute(...args));
+			}
+			else {
+				bot.on(event.name, (...args) => event.execute(...args));
+			}
+		}
+	}
+	else {
+		bot[dir] = new Discord.Collection();
+		for (const fileName of filesNames) {
+			const file = require(`./${dir}/${fileName}`);
+			bot[dir].set(file.data.name, file);
+		}
+	}
 });
-  
+
 bot.login(process.env.DISCORD_TOKEN);

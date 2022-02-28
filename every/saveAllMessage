@@ -12,15 +12,15 @@ require('dotenv').config();
  * @param {String} message
  */
 const saveAllMessages = message => {
-    const filePath = `${process.env.MAINPATH}/sources/message-saves`;
-    const author = message.author;
-    const content = message.content.trim();
-    const separator = '\r\n[--------------message-separator--------------]\r\n';
-    // Save message
-    appendFile(filePath, [`${author.username} (${author.id}):\r\n${content}`], separator, message.channel);
-}
+	const filePath = `${process.env.MAINPATH}/sources/message-saves`;
+	const author = message.author;
+	const content = message.content.trim();
+	const separator = '\r\n[--------------message-separator--------------]\r\n';
+	// Save message
+	appendFile(filePath, [`${author.username} (${author.id}):\r\n${content}`], separator, message.channel);
+};
 
 module.exports = {
-    name: "saveAllMessages",
-    execute: saveAllMessages
+	name: 'saveAllMessages',
+	execute: saveAllMessages,
 };

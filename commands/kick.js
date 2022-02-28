@@ -2,106 +2,59 @@
  * Require modules
  * @requires
  */
-const Discord = require('discord.js');
-const errorMessages = require('./../config.json')
+const errorMessages = require('./../config.json');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { Permissions } = require('discord.js');
 
 /**
  * kick mentionned player after a cointoss
  * @function
- * @param {String} message
- * @param {Array[String]} args 
+ * @param {String} interaction
  */
-const kick = (message, args) => {
-    //check if the message was send to a discord server channel
-    if (!message.guild) return;
+const kick = async (interaction) => {
+	// check if the message was send to a discord server channel
+	if (!interaction.inGuild()) return;
 
-    //check if the discord server is available
-    if (!message.guild.available) return;
-    
-    //check if the message author is member of the discord server
-    const author = message.guild.member(message.author);
-    if(!author) return;
- 
-    //check if the user who use the command has the rights to do so
-    if (!author.hasPermission(Discord.Permissions.FLAGS.KICK_MEMBERS,false,true,true)) {
-        message.channel.send(errorMessages.missingRights);
-        return;
-    }
+	// check if the discord server is available
+	if (!interaction.guild.available) return;
 
-    let sideCoin;
-    console.log(args.length)
-    switch (args.length) {
-        case 1:
-            message.mentions.users.map(user => {
-                let kickedUser = message.guild.member(user);
-                if(!kickedUser) return;
+	// check if the message author is member of the discord server
+	const author = interaction.member;
+	if (!author) return;
 
-                sideCoin = "pile"
-                let random = Math.floor(Math.random() * (1 - 0 + 1) + 0);
+	// check if the user who use the command has the rights to do so
+	if (!author.permissions.has(Permissions.FLAGS.KICK_MEMBERS, false, true, true)) {
+		interaction.reply(errorMessages.missingRights);
+		return;
+	}
 
-                if (random === 0){
-                    message.channel.send("Vous avez tiré PILE")
-                    kickedUser.kick('padpo au pile ou face').then(() =>{
-                        message.channel.send(`${user.username} a été kick`)
-                    }).catch(err => {
-                        message.channel.send("Impossible de kick l'utilisateur. Je ne dois pas avoir les droits suffisants")
-                        console.error(err);
-                    });
-                     
-                } else {
-                    message.channel.send("Vous avez tiré FACE")
-                    message.channel.send(`${user.username} n\'a pas été kick`)
-                }
-            });
-            break;
-        case 2:
-            message.mentions.users.map(user => {
-                let kickedUser = message.guild.member(user);
-                if(!kickedUser) return;
+	const kickedUser = await interaction.guild.members.fetch(interaction.options.getUser('user').id);
+	if (!kickedUser) return;
 
-                sideCoin = args[0].toLowerCase();
-                let random = Math.floor(Math.random() * (1 - 0 + 1) + 0);
-
-                if (random === 0){
-                    message.channel.send("Vous avez tiré PILE")
-                    if(sideCoin == "pile"){
-                        kickedUser.kick('padpo au pile ou face').then(() =>{
-                            message.channel.send(`${user.username} a été kick`)
-                        }).catch(err => {
-                            message.channel.send("Impossible de kick l'utilisateur. Je ne dois pas avoir les droits suffisants")
-                            console.error(err);
-                        });
-                    } else {
-                        message.channel.send(`${user.username} n\'a pas été kick`)
-                    }
-                } else {
-                    message.channel.send("Vous avez tiré FACE")
-                    if(sideCoin == "face"){
-                        kickedUser.kick('padpo au pile ou face').then(() =>{
-                            message.channel.send(`${user.username} a été kick`)
-                        }).catch(err => {
-                            message.channel.send("Impossible de kick l'utilisateur. Je ne dois pas avoir les droits suffisants")
-                            console.error(err);
-                        });
-                    } else {
-                        message.channel.send(`${user.username} n\'a pas été kick`)
-                    }
-                }
-            });
-            break;
-        default : 
-            message.channel.send("Trop de pile ou de face")
-            
-    }
-}
+	await interaction.reply('Pile c\'est kick, Face c\'est pas kick');
+	const random = Math.floor(Math.random() * (1 - 0 + 1) + 0);
+	if (random === 0) {
+		interaction.followUp('Vous avez tiré PILE');
+		kickedUser.kick('padpo au pile ou face').then(() => {
+			interaction.followUp(`${kickedUser.user.username} a été kick`);
+		}).catch(err => {
+			interaction.editReply('Impossible de kick l\'utilisateur. Je ne dois pas avoir les droits suffisants');
+			console.error(err);
+		});
+	}
+	else {
+		interaction.followUp('Vous avez tiré FACE');
+		interaction.followUp(`${kickedUser.user} n'a pas été kick`);
+	}
+};
 
 module.exports = {
-    name: "kick",
-    help: {
-        desc: "Je kick la personne choisi avec 50% de chance",
-        format: "[pile, face] [@mentions] (default : pile)"
-    },
-    args: false,
-    mentions: true,
-    execute: kick
+	data: new SlashCommandBuilder()
+		.setName('kick')
+		.setDescription('Je kick la personne choisi avec 50% de chance')
+		.addUserOption(option =>
+			option.setName('user')
+				.setDescription('L\'utilisateur a essayer de kick')
+				.setRequired(true)),
+	execute: kick,
 };
