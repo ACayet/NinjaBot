@@ -3,7 +3,6 @@
   "version": "2.0.0",
   "description": "A wonderful discord bot with many functionalities (risitas, toss a coin, avatar...)",
   "engines": {
-    "npm": "8.5.2",
     "node": "16.14.0"
   },
   "main": "bot.js",
