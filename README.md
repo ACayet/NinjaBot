@@ -1,5 +1,7 @@
 # NinjaBot
 
+[![Node CI](https://github.com/ACayet/NinjaBot/actions/workflows/github-ci.yml/badge.svg?branch=main)](https://github.com/ACayet/NinjaBot/actions/workflows/github-ci.yml)
+
 ## Prérequis
 
 * [NodeJS](https://nodejs.org/en) - Contient le gestionnaire de dependence npm
